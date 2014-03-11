@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+
+<html>
+    <head>
+        <link href="@Url.Content("~/Content/styles.css")" rel="stylesheet" type="text/css" />
+        <meta name="viewport" content="width=device-width" />
+        <title>@ViewBag.Title</title>
+    </head>
+    <body>
+        <div class="wrapper">
+            <div class="header">
+                <div class="left">
+                    <img src="~/Content/rmrlogo.png" alt="RMR" style="height: 4em;" />
+                    <br />
+                    Research My Rental
+                </div>
+                <div class="right">
+                    Welcome back Ben!
+                </div>
+            </div>
+            <div class="nav">
+                <div class="nav_content">
+                    <ul>
+                        <li><a href="" target="_self">Home</a></li>
+                        <li><a href="" target="_self">Reviews</a></li>
+                        <li><a href="" target="_self">Resources</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="main">
+                @RenderBody()
+            </div>
+            <div class="push"></div>
+        </div>
+        <div class="footer">
+            &copy; RateMyRental 2014
+        </div>
+    </body>
+</html>
