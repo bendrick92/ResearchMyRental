@@ -1,9 +1,4 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
-}
-
-/* Set padding to keep content from hitting the edges */
+﻿/* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
@@ -18,7 +13,7 @@ textarea {
 
 /* styles for validation helpers */
 .field-validation-error {
-    color: #b94a48;
+    color: #ff0000;
 }
 
 .field-validation-valid {
@@ -34,8 +29,12 @@ input[type="checkbox"].input-validation-error {
 }
 
 .validation-summary-errors {
-    color: #b94a48;
+    color: #000;
 }
+
+    .validation-summary-errors ul {
+
+    }
 
 .validation-summary-valid {
     display: none;

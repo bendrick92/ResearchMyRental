@@ -1,18 +1,18 @@
-﻿@model System.Web.Mvc.HandleErrorInfo
+﻿@model RateMyRental.Models.ErrorViewModel
+
 @{
-    Layout = null;
+    ViewBag.Title = "Error";
 }
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Error</title>
-</head>
-<body>
-    <hgroup>
-        <h1 class="text-danger">Error.</h1>
-        <h2 class="text-danger">An error occurred while processing your request.</h2>
-    </hgroup>
-</body>
-</html>
+<div class="fullCol">
+    <div class="row title">
+        Error
+    </div>
+    <div class="row br">
+        @Html.DisplayFor(m => m.errorMessage)
+    </div>
+    <div class="row br">
+        @Html.ActionLink("OK", "Index", "Account", null, null)
+    </div>
+</div>
+

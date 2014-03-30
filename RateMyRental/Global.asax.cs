@@ -16,6 +16,9 @@ namespace RateMyRental
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            DbInitialize dbi = new DbInitialize();
+            dbi.Initialize();
         }
     }
 }

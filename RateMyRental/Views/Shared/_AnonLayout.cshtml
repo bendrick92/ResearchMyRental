@@ -1,18 +1,36 @@
 ﻿<!DOCTYPE html>
 
 <html>
-<head>
-    <link href="@Url.Content("~/Content/styles.css")" rel="stylesheet" type="text/css" />
-    <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
-</head>
-<body>
-    <div class="wrapper">
-        @RenderBody()
-        <div class="push"></div>
-    </div>
-    <div class="footer">
-        &copy; RateMyRental 2014
-    </div>
-</body>
+    <head>
+        <link href="@Url.Content("~/Content/Styles.css")" rel="stylesheet" type="text/css" />
+        <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
+        <script src="@Url.Content("~/Scripts/jquery-1.10.2.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/Scripts/popupManager.js")" type="text/javascript"></script>
+        <link href="@Url.Content("http://fonts.googleapis.com/css?family=Hammersmith+One")" rel="stylesheet" type="text/css">
+        <meta name="viewport" content="width=device-width" />
+        <title>@ViewBag.Title</title>
+    </head>
+    <body>
+        <div class="wrapper">
+            <div class="header">
+                <div class="logo">
+                    <img src="~/Content/rmrlogo.png" alt="RMR" style="height: 100%; display: block; margin: 0 auto;" />
+                </div>
+                <div class="title">
+                    Research My Rental
+                </div>
+            </div>
+            <div class="main">
+                @RenderBody()
+            </div>
+            @if (TempData["popupMessage"] != null)
+            {
+                @Html.Partial("_popupMessage")
+            }
+            <div class="push"></div>
+        </div>
+        <div class="footer">
+            &copy; ResearchMyRental 2014
+        </div>
+    </body>
 </html>
