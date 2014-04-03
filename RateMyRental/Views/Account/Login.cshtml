@@ -1,0 +1,74 @@
+﻿@model RateMyRental.Models.LoginViewModel
+
+@{
+    ViewBag.Title = "Login";
+}
+
+@{
+    <script type="text/javascript">
+        //Slideshow credit to csstricks.com
+        //http://css-tricks.com/snippets/jquery/simple-auto-playing-slideshow/
+
+        $(document).ready(function () {
+            $("#slideshow > div:gt(0)").hide();
+
+            setInterval(function () {
+                $("#slideshow > div:first")
+                    .fadeOut(1000)
+                    .next()
+                    .fadeIn(1000)
+                    .end()
+                    .appendTo("#slideshow");
+            }, 3000);
+        })
+    </script>
+}
+
+@using (Html.BeginForm(FormMethod.Post))
+{
+<div class="leftCol" id="loginLC">
+    <div id="slideshow">
+        <div>
+            <img src="~/Content/house1.jpg" />
+        </div>
+        <div>
+            <img src="~/Content/house2.jpg" />
+        </div>
+    </div>
+</div>
+<div class="rightCol" id="loginRC">
+    <div class="row">
+        Are you a student of UW-L, Viterbo, or WTC?
+    </div>
+    <div style="width: 80%; margin-left: 10%;">
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div id="validationSummary" class="row validationSummary br">
+                @Html.ValidationSummary()
+            </div>
+        } 
+        <div class="row br">
+            Username: @Html.TextBoxFor(m => m.username)
+        </div>
+        <div class="row br">
+            Password: @Html.PasswordFor(m => m.password)
+        </div>
+        <div class="row br" style="text-align: right;">
+            <input type="submit" value="Login" /> | @Html.ActionLink("Guest Login", "GuestLogin")
+        </div>
+        <div class="row br" style="text-align: right;">
+            @Html.ActionLink("Forgot Password?", "PasswordRecover")
+        </div>
+        <div class="row title br">
+            First Time Visiting?
+        </div>
+        <div class="row br">
+            <a href="~/Account/Register" target="_self" style="text-decoration: none; color: #000;">
+                <div class="registerButton">
+                    Create Account
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+}
