@@ -214,6 +214,25 @@ form {
         }
 
 /* Account */
+.indexButton {
+    height: auto;
+    padding: 1em 1% 1em 1%;
+    display: inline-block;
+    background-color: #ffd800;
+    font-size: 1.2em;
+    text-align: center;
+    -moz-box-shadow: 1px 1px 1px #888;
+    -webkit-box-shadow: 1px 1px 1px #888;
+    box-shadow: 1px 1px 1px #888;
+}
+
+    .indexButton:hover {
+        background-color: #debc00;
+        -moz-box-shadow: inset 0 0 3px #888;
+        -webkit-box-shadow: inset 0 0 3px #888;
+        box-shadow: inset 0 0 3px #888;
+    }
+
 .registerButton {
     width: 10em;
     height: auto;
@@ -290,7 +309,7 @@ form {
         width: 100%;
     }
 
-    #accountIndexLC {
+    #loginLC {
         display: none;
     }
 }

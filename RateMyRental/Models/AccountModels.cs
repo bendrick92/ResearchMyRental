@@ -9,8 +9,18 @@ namespace RateMyRental.Models
 {
     public class Account_IndexViewModel
     {
+
+    }
+
+    public class LoginViewModel
+    {
         public string username { get; set; }
         public string password { get; set; }
+    }
+
+    public class GuestLoginViewModel
+    {
+
     }
 
     public class RegisterViewModel
@@ -27,6 +37,6 @@ namespace RateMyRental.Models
 
     public class ResetPasswordViewModel
     {
-
+        public string email { get; set; }
     }
 }

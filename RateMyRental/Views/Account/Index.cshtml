@@ -1,71 +1,18 @@
 ﻿@model RateMyRental.Models.Account_IndexViewModel
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Welcome!";
 }
 
-@{
-    <script type="text/javascript">
-        //Slideshow credit to csstricks.com
-        //http://css-tricks.com/snippets/jquery/simple-auto-playing-slideshow/
-
-        $(document).ready(function () {
-            $("#slideshow > div:gt(0)").hide();
-
-            setInterval(function () {
-                $("#slideshow > div:first")
-                    .fadeOut(1000)
-                    .next()
-                    .fadeIn(1000)
-                    .end()
-                    .appendTo("#slideshow");
-            }, 3000);
-        })
-    </script>
-}
-
-@using (Html.BeginForm(FormMethod.Post))
-{
-<div class="leftCol" id="accountIndexLC">
-    <div id="slideshow">
-        <div>
-            <img src="~/Content/house1.jpg" />
+<div class="fullCol">
+    <a href="~/Account/GuestLogin" target="_self" style="text-decoration: none; color: #000;">
+        <div class="indexButton" style="width: 47%;">
+            Guests
         </div>
-        <div>
-            <img src="~/Content/house2.jpg" />
+    </a>
+    <a href="~/Account/Login" target="_self" style="text-decoration: none; color: #000;">
+        <div class="indexButton" style="width: 47%;">
+            UW-L, Viterbo, WTC Students
         </div>
-    </div>
+    </a>
 </div>
-<div class="rightCol" id="accountIndexRC">
-    <div style="width: 80%; margin-left: 10%;">
-        @if (!ViewData.ModelState.IsValid)
-        {
-            <div id="validationSummary" class="row validationSummary br">
-                @Html.ValidationSummary()
-            </div>
-        } 
-        <div class="row br">
-            Username: @Html.TextBoxFor(m => m.username)
-        </div>
-        <div class="row br">
-            Password: @Html.PasswordFor(m => m.password)
-        </div>
-        <div class="row br" style="text-align: right;">
-            <input type="submit" value="Login" />
-        </div>
-        <div class="row br" style="text-align: right;">
-            @Html.ActionLink("Forgot Password?", "PasswordRecover")
-        </div>
-        <div class="row title br">
-            First Time Visiting?
-        </div>
-        <div class="row br">
-            <a href="~/Account/Register" target="_self" style="text-decoration: none; color: #000;">
-                <div class="registerButton">
-                    Create Account
-                </div>
-            </a>
-        </div>
-    </div>
-</div>
-}

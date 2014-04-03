@@ -11,7 +11,6 @@ namespace RateMyRental.Controllers
 {
     public class AccountController : BaseController
     {
-
         [AllowAnonymous]
         public ActionResult Index()
         {
@@ -19,9 +18,16 @@ namespace RateMyRental.Controllers
             return View(model);
         }
 
+        [AllowAnonymous]
+        public ActionResult Login()
+        {
+            LoginViewModel model = new LoginViewModel();
+            return View(model);
+        }
+
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult Index(Account_IndexViewModel model)
+        public ActionResult Login(LoginViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -41,6 +47,8 @@ namespace RateMyRental.Controllers
                         {
                             //Create session cookie
                             FormsAuthentication.SetAuthCookie(model.username, false);
+                            //Assign Session variable for username
+                            Session["Username"] = model.username;
                             //Login success
                             return RedirectToAction("Index", "Home", null);
                         }
@@ -64,6 +72,17 @@ namespace RateMyRental.Controllers
             }
 
             return View(model);
+        }
+
+        [AllowAnonymous]
+        public ActionResult GuestLogin()
+        {
+            //Create session cookie - Guest
+            FormsAuthentication.SetAuthCookie("Guest", false);
+            //Set session variable for username
+            Session["Username"] = "Guest";
+            //Login success
+            return RedirectToAction("Index", "Home", null);
         }
 
         [AllowAnonymous]
@@ -199,6 +218,34 @@ namespace RateMyRental.Controllers
             {
                 return RedirectToAction("Error", new { errorMessage = "This account has already been activated!" });
             }
+        }
+
+        [AllowAnonymous]
+        public ActionResult ResetPassword()
+        {
+            ResetPasswordViewModel model = new ResetPasswordViewModel();
+            return View(model);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult ResetPassword(ResetPasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                //Is the provided e-mail tied to an existing account?
+                if (repo.CheckIfEmailInUse(model.email))
+                {
+
+                }
+                //E-mail is not tied to an existing account
+                else
+                {
+
+                }
+            }
+
+            return View(model);
         }
 	}
 }
