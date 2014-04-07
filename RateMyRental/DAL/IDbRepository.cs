@@ -15,6 +15,7 @@ namespace RateMyRental.DAL
         User GetUserByUsername(string username);
         IEnumerable<User> GetAllUsers();
         void ActivateUser(int userID);
+        bool CheckIfUserIsActive(int userID);
         void AddRegistration(Registration registration);
         void DeleteRegistration(int registrationID);
         Registration GetRegistrationByID(int registrationID);
@@ -26,6 +27,11 @@ namespace RateMyRental.DAL
         Domain GetDomainByID(int domainID);
         IEnumerable<Domain> GetAllDomains();
         List<string> GetAllDomainNames();
+        void AddPasswordResetRequest(PasswordResetRequest prr);
+        void DeletePasswordResetRequest(int prrID);
+        void DeletePasswordResetRequestsForUser(int userID);
+        PasswordResetRequest GetPasswordResetRequestByID(int prrID);
+        PasswordResetRequest GetPasswordResetRequestByToken(string token);
         #endregion
 
         #region Misc

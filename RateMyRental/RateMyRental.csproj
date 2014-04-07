@@ -158,6 +158,7 @@
     <Compile Include="DbInitialize.cs" />
     <Compile Include="Email.cs" />
     <Compile Include="Entities\Domain.cs" />
+    <Compile Include="Entities\PasswordResetRequest.cs" />
     <Compile Include="Entities\Registration.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Global.asax.cs">
@@ -173,14 +174,15 @@
   <ItemGroup>
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="packages.config" />
-    <Content Include="Views\Shared\_AnonLayout.cshtml" />
+    <Content Include="Views\Shared\_LoginLayout.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Shared\_PopupMessage.cshtml" />
     <Content Include="Views\Account\ActivateAccount.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Account\ResetPasswordRequest.cshtml" />
+    <Content Include="Views\Shared\_AnonLayout.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
-    <Content Include="Views\Account\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

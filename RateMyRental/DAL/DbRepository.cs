@@ -90,6 +90,24 @@ namespace RateMyRental.DAL
         }
 
         /// <summary>
+        /// Checks to see if the User has activated account yet
+        /// </summary>
+        /// <param name="userID">ID of user to check active</param>
+        /// <returns>If user is active</returns>
+        public bool CheckIfUserIsActive(int userID)
+        {
+            User user = GetUserByID(userID);
+            if (user.isActive)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Adds Registration to database
         /// </summary>
         /// <param name="registration">Registration object to be added</param>
@@ -211,6 +229,59 @@ namespace RateMyRental.DAL
         {
             var v = from d in dbc.Domains select d.DomainName;
             return v.ToList();
+        }
+
+        /// <summary>
+        /// Adds new PasswordResetRequest object to database
+        /// </summary>
+        /// <param name="prr">PasswordResetRequest to be added</param>
+        public void AddPasswordResetRequest(PasswordResetRequest prr)
+        {
+            dbc.Entry(prr).State = EntityState.Added;
+            Save();
+        }
+
+        /// <summary>
+        /// Deletes PasswordResetRequest object from database
+        /// </summary>
+        /// <param name="prrID">ID of PasswordResetRequest object to be deleted</param>
+        public void DeletePasswordResetRequest(int prrID)
+        {
+            PasswordResetRequest prr = GetPasswordResetRequestByID(prrID);
+            dbc.Entry(prr).State = EntityState.Deleted;
+            Save();
+        }
+
+        public void DeletePasswordResetRequestsForUser(int userID)
+        {
+            var v = from p in dbc.PasswordResetRequests where p.UserID == userID select p;
+            foreach (var rr in v)
+            {
+                dbc.Entry(rr).State = EntityState.Deleted;
+            }
+            Save();
+        }
+
+        /// <summary>
+        /// Gets PasswordResetRequest object from database
+        /// </summary>
+        /// <param name="prrID">ID of PasswordResetRequest object</param>
+        /// <returns>PasswordResetRequest object</returns>
+        public PasswordResetRequest GetPasswordResetRequestByID(int prrID)
+        {
+            var v = from p in dbc.PasswordResetRequests where p.ID == prrID select p;
+            return v.FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Gets PasswordResetRequest object from database
+        /// </summary>
+        /// <param name="token">Token of PasswordResetRequest object</param>
+        /// <returns>PasswordResetRequest object</returns>
+        public PasswordResetRequest GetPasswordResetRequestByToken(string token)
+        {
+            var v = from p in dbc.PasswordResetRequests where p.Token == token select p;
+            return v.FirstOrDefault();
         }
 
         #region Misc

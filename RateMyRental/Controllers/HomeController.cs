@@ -9,10 +9,7 @@ namespace RateMyRental.Controllers
 {
     public class HomeController : BaseController
     {
-        /// <summary>
-        /// Render Index View for Home
-        /// </summary>
-        /// <returns></returns>
+        [AllowAnonymous]
         public ActionResult Index()
         {
             Home_IndexViewModel model = new Home_IndexViewModel();

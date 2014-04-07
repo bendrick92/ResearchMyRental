@@ -37,10 +37,7 @@
     </div>
 </div>
 <div class="rightCol" id="loginRC">
-    <div class="row">
-        Are you a student of UW-L, Viterbo, or WTC?
-    </div>
-    <div style="width: 80%; margin-left: 10%;">
+    <div style="width: 80%; height: auto; margin-left: 10%;">
         @if (!ViewData.ModelState.IsValid)
         {
             <div id="validationSummary" class="row validationSummary br">
@@ -54,20 +51,10 @@
             Password: @Html.PasswordFor(m => m.password)
         </div>
         <div class="row br" style="text-align: right;">
-            <input type="submit" value="Login" /> | @Html.ActionLink("Guest Login", "GuestLogin")
+            <input type="submit" value="Login" /> | <a href="~/Account/Register" target="_self" style="color: #000;">Create Account</a>
         </div>
         <div class="row br" style="text-align: right;">
-            @Html.ActionLink("Forgot Password?", "PasswordRecover")
-        </div>
-        <div class="row title br">
-            First Time Visiting?
-        </div>
-        <div class="row br">
-            <a href="~/Account/Register" target="_self" style="text-decoration: none; color: #000;">
-                <div class="registerButton">
-                    Create Account
-                </div>
-            </a>
+            @Html.ActionLink("Forgot Password?", "ResetPasswordRequest")
         </div>
     </div>
 </div>

@@ -7,11 +7,6 @@ using System.Web;
 
 namespace RateMyRental.Models
 {
-    public class Account_IndexViewModel
-    {
-
-    }
-
     public class LoginViewModel
     {
         public string username { get; set; }
@@ -35,8 +30,15 @@ namespace RateMyRental.Models
         public User user { get; set; }
     }
 
-    public class ResetPasswordViewModel
+    public class ResetPasswordRequestViewModel
     {
         public string email { get; set; }
+    }
+
+    public class ResetPasswordViewModel
+    {
+        public int userID { get; set; }
+        public string newPassword { get; set; }
+        public string newPassword_confirm { get; set; }
     }
 }

@@ -14,6 +14,16 @@ namespace RateMyRental.Controllers
         //Repsitory object used for DAL processes.
         public DbRepository repo = new DbRepository();
 
+        protected override void Initialize(System.Web.Routing.RequestContext requestContext)
+        {
+            base.Initialize(requestContext);
+            if (Request.IsAuthenticated && HttpContext.Session.IsNewSession)
+            {
+                Logout();
+                Response.Redirect("~/Home");
+            }
+        }
+
         [AllowAnonymous]
         public ActionResult Error(string errorMessage)
         {
@@ -26,7 +36,7 @@ namespace RateMyRental.Controllers
         {
             FormsAuthentication.SignOut();
             Session.Clear();
-            return RedirectToAction("Index", "Account");
+            return RedirectToAction("Login", "Account");
         }
 	}
 }

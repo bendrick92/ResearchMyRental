@@ -12,13 +12,6 @@ namespace RateMyRental.Controllers
     public class AccountController : BaseController
     {
         [AllowAnonymous]
-        public ActionResult Index()
-        {
-            Account_IndexViewModel model = new Account_IndexViewModel();
-            return View(model);
-        }
-
-        [AllowAnonymous]
         public ActionResult Login()
         {
             LoginViewModel model = new LoginViewModel();
@@ -37,31 +30,40 @@ namespace RateMyRental.Controllers
 
                 if (user != null)
                 {
-                    //Is there a password entered in the field?
-                    if (model.password != "" && model.password != null)
+                    //Check if user has activated account
+                    if (repo.CheckIfUserIsActive(user.ID))
                     {
-                        //Hashed password from database
-                        string hashedPassword = user.password;
-                        //Does hashed password from database match hashed password in password field?
-                        if (PasswordHash.PasswordHash.ValidatePassword(model.password, hashedPassword))
+                        //Is there a password entered in the field?
+                        if (model.password != "" && model.password != null)
                         {
-                            //Create session cookie
-                            FormsAuthentication.SetAuthCookie(model.username, false);
-                            //Assign Session variable for username
-                            Session["Username"] = model.username;
-                            //Login success
-                            return RedirectToAction("Index", "Home", null);
+                            //Hashed password from database
+                            string hashedPassword = user.password;
+                            //Does hashed password from database match hashed password in password field?
+                            if (PasswordHash.PasswordHash.ValidatePassword(model.password, hashedPassword))
+                            {
+                                //Create session cookie
+                                FormsAuthentication.SetAuthCookie(model.username, false);
+                                //Assign Session variable for username
+                                Session["Username"] = model.username;
+                                //Login success
+                                return RedirectToAction("Index", "Home", null);
+                            }
+                            //Passwords do not match
+                            else
+                            {
+                                ModelState.AddModelError("password", "Invalid username or password.");
+                            }
                         }
-                        //Passwords do not match
+                        //No password entered
                         else
                         {
                             ModelState.AddModelError("password", "Invalid username or password.");
                         }
                     }
-                    //No password entered
+                    //User has not activated account yet
                     else
                     {
-                        ModelState.AddModelError("password", "Invalid username or password.");
+                        ModelState.AddModelError("username", "This account hasn't been activated yet.");
                     }
                 }
                 //No user from database tied to provided e-mail
@@ -72,17 +74,6 @@ namespace RateMyRental.Controllers
             }
 
             return View(model);
-        }
-
-        [AllowAnonymous]
-        public ActionResult GuestLogin()
-        {
-            //Create session cookie - Guest
-            FormsAuthentication.SetAuthCookie("Guest", false);
-            //Set session variable for username
-            Session["Username"] = "Guest";
-            //Login success
-            return RedirectToAction("Index", "Home", null);
         }
 
         [AllowAnonymous]
@@ -159,7 +150,7 @@ namespace RateMyRental.Controllers
                                     //Return popup asking to confirm registration e-mail
                                     TempData["popupMessage"] = "Thank you!  Please check the e-mail account you provided to confirm your registration.";
 
-                                    return RedirectToAction("Index", "Account", null);
+                                    return RedirectToAction("Login", "Account", null);
                                 }
 
                                 //Terms and conditions were not accepted
@@ -221,10 +212,80 @@ namespace RateMyRental.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult ResetPassword()
+        public ActionResult ResetPasswordRequest()
+        {
+            ResetPasswordRequestViewModel model = new ResetPasswordRequestViewModel();
+            return View(model);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult ResetPasswordRequest(ResetPasswordRequestViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                //Is the provided e-mail tied to an existing account?
+                if (repo.CheckIfEmailInUse(model.email))
+                {
+                    //Get user account tied to e-mail
+                    User user = repo.GetUserByUsername(model.email);
+
+                    //Generate new random token
+                    string token = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
+
+                    //Create PasswordResetRequest object
+                    PasswordResetRequest prr = new PasswordResetRequest();
+                    prr.UserID = user.ID;
+                    prr.Token = token;
+
+                    //Add PasswordResetRequest object to database
+                    repo.AddPasswordResetRequest(prr);
+
+                    //Compose and send reset request e-mail
+                    List<string> recipients = new List<string>();
+                    recipients.Add(model.email);
+                    string subject = "ResearchMyRental - Reset Password";
+                    string introduction = "Dear user,";
+                    string body = String.Format("If you would like to continue resetting your password, please click the link below.<br><br><a href=\"http://localhost:50737/Account/ResetPassword?token=" + prr.Token + "\">Reset your password</a>");
+                    Email.sendMessage(recipients, subject, introduction, body);
+
+                    //Return popup asking to check e-mail
+                    TempData["popupMessage"] = "Please check the e-mail account you provided to complete the reset process.";
+
+                    return RedirectToAction("Login");
+                }
+
+                //E-mail is not tied to an existing account
+                else
+                {
+                    //Not the best practice, but it works
+                    //Creates doorway for phishers...
+                    ModelState.AddModelError("email", "Invalid e-mail.");
+                }
+            }
+
+            //Return view with validation messages
+            return View(model);
+        }
+
+        [AllowAnonymous]
+        public ActionResult ResetPassword(string token)
         {
             ResetPasswordViewModel model = new ResetPasswordViewModel();
-            return View(model);
+            //Retrieve PasswordResetRequest object from token parameter
+            PasswordResetRequest prr = repo.GetPasswordResetRequestByToken(token);
+            //PasswordResetRequest hasn't been resolved
+            if (prr != null)
+            {
+                User user = repo.GetUserByID(prr.UserID);
+                model.userID = user.ID;
+                return View(model);
+            }
+            //PasswordResetRequest has already been resolved
+            else
+            {
+                return RedirectToAction("Error", new { errorMessage = "This password reset request has already been resolved!" });
+            }
         }
 
         [HttpPost]
@@ -233,15 +294,34 @@ namespace RateMyRental.Controllers
         {
             if (ModelState.IsValid)
             {
-                //Is the provided e-mail tied to an existing account?
-                if (repo.CheckIfEmailInUse(model.email))
+                //Check to be sure passwords match
+                if (model.newPassword == model.newPassword_confirm)
                 {
+                    //Get User from database
+                    User user = repo.GetUserByID(model.userID);
 
+                    //Generate salt and encrypt new password
+                    string hash = PasswordHash.PasswordHash.CreateHash(model.newPassword);
+
+                    //Set password of model.user to new password
+                    user.password = hash;
+
+                    //Update User in database
+                    repo.UpdateUser(user);
+
+                    //Delete PasswordResetRequest object from database
+                    repo.DeletePasswordResetRequestsForUser(model.userID);
+
+                    //Return popup confirming password reset
+                    TempData["popupMessage"] = "Password successfully reset!";
+
+                    return RedirectToAction("Login");
                 }
-                //E-mail is not tied to an existing account
+
+                //Passwords do not match
                 else
                 {
-
+                    ModelState.AddModelError("newPassword", "Passwords do not match.");
                 }
             }
 

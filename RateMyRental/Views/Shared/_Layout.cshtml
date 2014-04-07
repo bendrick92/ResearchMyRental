@@ -23,15 +23,15 @@
                     Welcome back @Session["Username"].ToString()!
                     <br />
                     <br />
-                    @Html.ActionLink("Logout", "Logout", "Base", null, null)
+                    @Html.ActionLink("Logout", "Logout", "Base", null, new { @class = "welcomeButton" })
                 </div>
             </div>
             <div class="nav">
                 <div class="nav_content">
                     <ul>
-                        <li><a href="" target="_self">Home</a></li>
-                        <li><a href="" target="_self">Reviews</a></li>
-                        <li><a href="" target="_self">Resources</a></li>
+                        <li><a href="~/Home" target="_self">Home</a></li>
+                        <li><a href="~/Reviews" target="_self">Reviews</a></li>
+                        <li><a href="~/Resources" target="_self">Resources</a></li>
                     </ul>
                 </div>
             </div>
