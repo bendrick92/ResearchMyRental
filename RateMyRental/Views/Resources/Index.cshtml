@@ -1,0 +1,19 @@
+﻿@model RateMyRental.Models.Resources_IndexViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div>
+    <div class="row">
+        Below is a list of resources for your reference and use.  These documents may come in handy when searching for a place to live!
+    </div>
+    <div class="row">
+        <ul>
+            @foreach (var heading in @Model.resourceHeadings)
+            {
+                <li>@heading.headingText</li>
+            }
+        </ul>
+    </div>
+</div>

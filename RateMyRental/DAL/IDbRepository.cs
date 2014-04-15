@@ -34,6 +34,11 @@ namespace RateMyRental.DAL
         PasswordResetRequest GetPasswordResetRequestByToken(string token);
         #endregion
 
+        #region Resources
+        void AddResourceHeading(ResourceHeading rh);
+        IEnumerable<ResourceHeading> GetAllResourceHeadings();
+        #endregion
+
         #region Misc
         void Save();
         #endregion

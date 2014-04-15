@@ -284,6 +284,20 @@ namespace RateMyRental.DAL
             return v.FirstOrDefault();
         }
 
+        #region Resources
+        public void AddResourceHeading(ResourceHeading rh)
+        {
+            dbc.Entry(rh).State = EntityState.Added;
+            Save();
+        }
+
+        public IEnumerable<ResourceHeading> GetAllResourceHeadings()
+        {
+            var v = from rh in dbc.ResourceHeadings select rh;
+            return v;
+        }
+        #endregion
+
         #region Misc
         /// <summary>
         /// Saves changes made to EfDbContext
