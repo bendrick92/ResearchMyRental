@@ -240,7 +240,10 @@ namespace RateMyRental.Controllers
         {
             if (ModelState.IsValid)
             {
-
+                //Delete Resource from database
+                repo.DeleteResource(model.resource.ID);
+                TempData["popupMessage"] = "Resource successfully deleted!";
+                return RedirectToAction("Index");
             }
             return View(model);
         }

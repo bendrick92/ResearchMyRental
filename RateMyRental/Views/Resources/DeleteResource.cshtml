@@ -1,0 +1,47 @@
+﻿@model RateMyRental.Models.DeleteResourceViewModel
+
+@{
+    ViewBag.Title = "Delete Resource";
+}
+
+@using (Html.BeginForm("AddResource", "Resources", FormMethod.Post, new { encType = "multipart/form-data" }))
+{
+    @Html.HiddenFor(m => m.resource.ID)
+    @Html.HiddenFor(m => m.resource.IsURL)
+    @Html.HiddenFor(m => m.resource.UploadDate)
+    <div class="fullCol">
+        <div class="row">
+            Are you sure you want to delete this resource?
+        </div>
+        <div class="row br headerRow">
+            Title of resource
+        </div>
+        <div class="row br">
+            @Html.DisplayFor(m => m.resource.DisplayName)
+        </div>
+        <div class="row br headerRow">
+            Type of resource
+        </div>
+        <div class="row br">
+            @Html.DisplayFor(m => m.resource.ResourceHeading.headingText)
+        </div>
+        @if (Model.resource.IsURL == true)
+        {
+        <div class="row br headerRow">
+            URL of resource
+        </div>
+        }
+        else
+        {
+        <div class="row br headerRow">
+            File name
+        </div>
+        }
+        <div class="row br">
+            @Html.DisplayFor(m => m.resource.FileName)
+        </div>
+        <div class="row br inputs">
+            <input type="submit" value="Confirm Delete" /> | @Html.ActionLink("Cancel", "Index")
+        </div>
+    </div>
+}
