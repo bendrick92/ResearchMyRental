@@ -1,0 +1,69 @@
+﻿@model RateMyRental.Models.EditResourceHeadingViewModel
+
+@{
+    ViewBag.Title = "Edit Heading";
+}
+
+@{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var isURL = $("#chkBoxIsURL").attr('checked') ? true : false;
+            if (isURL) {
+                $(".urlRow").show();
+                $(".fileUploadRow").hide();
+            }
+            else {
+                $(".urlRow").hide();
+                $(".fileUploadRow").show();
+            }
+
+            $("#chkBoxIsURL").change(function () {
+                if (this.checked) {
+                    $(".urlRow").show();
+                    $(".fileUploadRow").hide();
+                }
+                else {
+                    $(".urlRow").hide();
+                    $(".fileUploadRow").show();
+                }
+            })
+        })
+    </script>
+}
+
+@using (Html.BeginForm("EditResourceHeading", "Resources"))
+{
+    @Html.HiddenFor(m => m.resourceHeading.ID)
+    <div class="leftCol">
+        <div class="row headerRow">
+            Exisiting headings
+        </div>
+        <div class="row br">
+            <ul style="list-style-type: none;">
+            @foreach (var heading in Model.currentResourceHeadingsList)
+            {
+                <li>@heading</li>
+            }
+            </ul>
+        </div>
+    </div>
+    <div class="rightCol">
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div id="validationSummary" class="row validationSummary br">
+                @Html.ValidationSummary()
+            </div>
+        }
+        <div class="row headerRow">
+            Would you like to change the heading text?
+        </div>
+        <div class="row br">
+            @Html.EditorFor(m => m.resourceHeading.headingText)
+        </div>
+    </div>
+    <div class="fullCol">
+        <div class="row br inputs">
+            <input type="submit" value="Save Changes" /> | @Html.ActionLink("Cancel", "Index")
+        </div>
+    </div>
+}

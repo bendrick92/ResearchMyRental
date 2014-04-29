@@ -1,0 +1,80 @@
+﻿@model RateMyRental.Models.AddResourceViewModel
+
+@{
+    ViewBag.Title = "Add Resource";
+}
+
+@{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var isURL = $("#chkBoxIsURL").attr('checked') ? true : false;
+            if (isURL) {
+                $(".urlRow").show();
+                $(".fileUploadRow").hide();
+            }
+            else {
+                $(".urlRow").hide();
+                $(".fileUploadRow").show();
+            }
+
+            $("#chkBoxIsURL").change(function () {
+                if (this.checked) {
+                    $(".urlRow").show();
+                    $(".fileUploadRow").hide();
+                }
+                else {
+                    $(".urlRow").hide();
+                    $(".fileUploadRow").show();
+                }
+            })
+        })
+    </script>
+}
+
+@using (Html.BeginForm("AddResource", "Resources", FormMethod.Post, new { encType = "multipart/form-data" }))
+{
+    @Html.HiddenFor(m => m.resource.ID)
+    @Html.HiddenFor(m => m.resource.IsURL)
+    @Html.HiddenFor(m => m.resource.UploadDate)
+    <div class="fullCol">
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div id="validationSummary" class="row validationSummary br">
+                @Html.ValidationSummary()
+            </div>
+        }
+        <div class="row br headerRow">
+            What type of resource will this be?
+        </div>
+        <div class="row br">
+            @Html.DropDownListFor(m => m.resource.ResourceType, new SelectList(Model.resourceHeadingsList, "Value", "Text"))
+        </div>
+        <div class="row br headerRow">
+            What would you like to title this resource?  This will be the name visible to visitors.
+        </div>
+        <div class="row br">
+            @Html.EditorFor(m => m.resource.DisplayName)
+        </div>
+        <div class="row br headerRow">
+            Resource is a URL (i.e. www.google.com)
+        </div>
+        <div class="row br">
+            @Html.CheckBoxFor(m => m.isURL, new { @id = "chkBoxIsURL" })
+        </div>
+        <div class="row br headerRow urlRow">
+            URL to use
+        </div>
+        <div class="row br urlRow">
+            @Html.EditorFor(m => m.resource.FileName)
+        </div>
+        <div class="row br headerRow fileUploadRow">
+            File to use:
+        </div>
+        <div class="row br fileUploadRow">
+            <input type="file" name="file" id="file" />
+        </div>
+        <div class="row inputs">
+            <input type="submit" value="Add Resource" /> | @Html.ActionLink("Cancel", "Index")
+        </div>
+    </div>
+}

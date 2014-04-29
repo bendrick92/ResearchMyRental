@@ -1,0 +1,42 @@
+﻿@model RateMyRental.Models.AddResourceHeadingViewModel
+
+@{
+    ViewBag.Title = "Add New Heading";
+}
+
+@using (Html.BeginForm("AddResourceHeading", "Resources"))
+{
+    @Html.HiddenFor(m => m.resourceHeading.ID)
+    <div class="leftCol">
+        <div class="row headerRow">
+            Exisiting headings
+        </div>
+        <div class="row br">
+            <ul style="list-style-type: none;">
+            @foreach (var heading in Model.currentResourceHeadingsList)
+            {
+                <li>@heading</li>
+            }
+            </ul>
+        </div>
+    </div>
+    <div class="rightCol">
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div id="validationSummary" class="row validationSummary br">
+                @Html.ValidationSummary()
+            </div>
+        }
+        <div class="row headerRow">
+            What would you like to title this new heading?
+        </div>
+        <div class="row br">
+            @Html.EditorFor(m => m.newResourceHeadingTitle)
+        </div>
+    </div>
+    <div class="fullCol">
+        <div class="row br inputs">
+            <input type="submit" value="Add New Heading" /> | @Html.ActionLink("Cancel", "Index")
+        </div>
+    </div>
+}

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.WebPages.Html;
 
 namespace RateMyRental.DAL
 {
@@ -35,8 +36,21 @@ namespace RateMyRental.DAL
         #endregion
 
         #region Resources
+        ResourceHeading GetResourceHeadingByID(int ID);
         void AddResourceHeading(ResourceHeading rh);
+        void DeleteResourceHeading(int ID);
+        void UpdateResourceHeading(ResourceHeading rh);
         IEnumerable<ResourceHeading> GetAllResourceHeadings();
+        List<SelectListItem> GetResourceHeadingList();
+        List<string> GetCurrentResourceHeadingsList();
+        Resource GetResourceByID(int resourceID);
+        IEnumerable<Resource> GetAllResources();
+        void AddResource(Resource resource);
+        void DeleteResource(int resourceID);
+        void UpdateResource(Resource resource);
+        List<string> GetAllowedExtensionsList();
+        bool CheckForResourceHeading(string resourceHeadingTitle);
+        bool CheckForResourceDependencies(int resourceHeadingID);
         #endregion
 
         #region Misc

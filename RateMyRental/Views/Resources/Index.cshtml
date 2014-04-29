@@ -1,19 +1,77 @@
 ﻿@model RateMyRental.Models.Resources_IndexViewModel
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Resources";
 }
 
-<div>
+<div class="fullCol">
     <div class="row">
         Below is a list of resources for your reference and use.  These documents may come in handy when searching for a place to live!
     </div>
-    <div class="row">
-        <ul>
-            @foreach (var heading in @Model.resourceHeadings)
-            {
-                <li>@heading.headingText</li>
-            }
-        </ul>
+    @foreach (var heading in @Model.resourceHeadings)
+    {
+        <div class="row br">
+            <div class="resourceHeading">
+                @heading.headingText
+                @if (Session["isAdmin"] != null)
+                {
+                    if (bool.Parse(Session["isAdmin"].ToString()))
+                    {
+                        <div style="font-size: .6em; display: inline-block; padding-left: 2em; font-weight: normal;">
+                            @Html.ActionLink("Edit", "EditResourceHeading", new { ID = heading.ID }, new { @class = "button2" }) | @Html.ActionLink("Delete", "DeleteResourceHeading", new { ID = heading.ID }, new { @class = "button3" })
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+        <div class="row br">
+            <ul class="resourceList">
+                @foreach (var resource in @Model.resources)
+                {
+                    if (resource.ResourceType == heading.ID)
+                    {
+                        if (resource.IsURL)
+                        {
+                            <li class="listItem">
+                                <a href="http://@resource.FileName" target="_blank">@resource.DisplayName</a>
+                                @if (Session["isAdmin"] != null)
+                                {
+                                    if (bool.Parse(Session["isAdmin"].ToString()))
+                                    {
+                                        @Html.ActionLink("Edit", "EditResource", new { ID = resource.ID }, new { @class = "button2" })
+                                    }
+                                }
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="listItem">
+                                <a href="~/Content/Resources/@resource.FileName" target="_self">@resource.DisplayName</a>
+                                @if (Session["isAdmin"] != null)
+                                {
+                                    if (bool.Parse(Session["isAdmin"].ToString()))
+                                    {
+                                        @Html.ActionLink("Edit", "EditResource", new { ID = resource.ID }, new { @class = "button2" })
+                                    }
+                                }
+                            </li>
+                        }
+                    }
+                }
+            </ul>
+        </div>
+        }
     </div>
+    @if (Session["isAdmin"] != null)
+    {
+        if (bool.Parse(Session["isAdmin"].ToString()))
+        {
+            <div class="row inputs">
+                @Html.ActionLink("Add New Resource", "AddResource", null, new { @class = "button1" })
+            </div>
+            <div class="row inputs">
+                @Html.ActionLink("Add New Resource Heading", "AddResourceHeading", null, new { @class = "button1" })
+            </div>
+        }
+    }
 </div>

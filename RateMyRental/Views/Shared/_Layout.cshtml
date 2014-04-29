@@ -23,7 +23,16 @@
                     Welcome back @Session["Username"].ToString()!
                     <br />
                     <br />
-                    @Html.ActionLink("Logout", "Logout", "Base", null, new { @class = "welcomeButton" })
+                    @if (Session["isAdmin"] != null)
+                    {
+                        if (bool.Parse(Session["isAdmin"].ToString()))
+                        {
+                            <span style="color: #f00;">ADMIN</span>
+                        }
+                    }
+                    <br />
+                    <br />
+                    @Html.ActionLink("Logout", "Logout", "Base", null, new { @class = "button1" })
                 </div>
             </div>
             <div class="nav">

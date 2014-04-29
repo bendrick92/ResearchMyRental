@@ -1,0 +1,19 @@
+﻿@model RateMyRental.Models.DeleteResourceHeadingViewModel
+
+@{
+    ViewBag.Title = "DeleteResourceHeading";
+}
+
+@using (Html.BeginForm("DeleteResourceHeading", "Resources"))
+{
+    @Html.HiddenFor(m => m.resourceHeading.ID)
+    @Html.HiddenFor(m => m.resourceHeading.headingText)
+    <div class="fullCol">
+        <div class="row headerRow">
+            Are you sure you want to delete the "@Model.resourceHeading.headingText" heading?
+        </div>
+        <div class="row br inputs">
+            <input type="submit" value="Confirm Delete" /> | @Html.ActionLink("Cancel", "Index")
+        </div>
+    </div>
+}

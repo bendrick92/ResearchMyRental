@@ -121,12 +121,15 @@
     <Content Include="Content\green_cup.png" />
     <Content Include="Content\house1.jpg" />
     <Content Include="Content\house2.jpg" />
+    <Content Include="Content\retina_wood.png" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\Styles.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\Fonts\Roboto-Regular.ttf" />
+    <Content Include="Content\Fonts\PassionOne-Regular.otf" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -154,6 +157,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ResourcesController.cs" />
+    <Compile Include="Controllers\ReviewsController.cs" />
     <Compile Include="DAL\DbRepository.cs" />
     <Compile Include="DAL\IDbRepository.cs" />
     <Compile Include="DbInitialize.cs" />
@@ -161,6 +165,7 @@
     <Compile Include="Entities\Domain.cs" />
     <Compile Include="Entities\PasswordResetRequest.cs" />
     <Compile Include="Entities\Registration.cs" />
+    <Compile Include="Entities\Resource.cs" />
     <Compile Include="Entities\ResourceHeading.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Global.asax.cs">
@@ -171,6 +176,7 @@
     <Compile Include="Models\BaseModels.cs" />
     <Compile Include="Models\HomeModels.cs" />
     <Compile Include="Models\ResourcesModels.cs" />
+    <Compile Include="Models\ReviewsModels.cs" />
     <Compile Include="PasswordHash.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -187,6 +193,12 @@
     <Content Include="Views\Shared\_AnonLayout.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Resources\Index.cshtml" />
+    <Content Include="Views\Resources\AddResource.cshtml" />
+    <Content Include="Views\Resources\EditResource.cshtml" />
+    <Content Include="Views\Resources\AddResourceHeading.cshtml" />
+    <Content Include="Views\Reviews\Index.cshtml" />
+    <Content Include="Views\Resources\DeleteResourceHeading.cshtml" />
+    <Content Include="Views\Resources\EditResourceHeading.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -196,7 +208,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\Resources\" />
     <Folder Include="Views\Base\" />
+    <Folder Include="Views\Shared\EditorTemplates\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

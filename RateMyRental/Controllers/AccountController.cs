@@ -45,6 +45,15 @@ namespace RateMyRental.Controllers
                                 FormsAuthentication.SetAuthCookie(model.username, false);
                                 //Assign Session variable for username
                                 Session["Username"] = model.username;
+                                if (user.isAdmin)
+                                {
+                                    //Assign Session variable for Administrator permissions
+                                    Session["isAdmin"] = true;
+                                }
+                                else
+                                {
+                                    Session["isAdmin"] = false;
+                                }
                                 //Login success
                                 return RedirectToAction("Index", "Home", null);
                             }

@@ -1,12 +1,13 @@
-﻿body {
-    background-image: url("green_cup.png");
-    background-repeat: repeat;
-    font-family: "Tahoma", sans-serif;
-    font-size: 62.5%;
-}
+﻿@font-face { font-family: "Roboto-Regular"; src: url("Fonts/Roboto-Regular.ttf"); }
+@font-face { font-family: "PassionOne-Regular"; src: url("Fonts/PassionOne-Regular.otf"); }
 
-.actionLink_basic {
-    text-decoration: none;
+body {
+    /* Background image utilized with permissions from subtlepatters.com */
+    background-image: url("retina_wood.png");
+    background-repeat: repeat;
+    /* All fonts utilized with permissions from fontsquirrel.com */
+    font-family: "Roboto-Regular", sans-serif;
+    font-size: 62.5%;
 }
 
 * {
@@ -20,6 +21,58 @@ html, body {
 form {
     height: 100%;
 }
+
+/* Form Elements */
+input {
+    padding: .2em;
+}
+
+.button1 {
+    padding: .3em 1.5em .3em 1.5em;
+    color: #ffffff;
+    border-radius: .2em;
+    text-decoration: none;
+    background-color: #199c00;
+    
+}
+
+    .button1:active {
+        background-image: -webkit-gradient(
+	        linear,
+	        right bottom,
+	        left top,
+	        color-stop(0.18, #147500),
+	        color-stop(0.79, #115700)
+        );
+        background-image: -o-linear-gradient(left top, #147500 18%, #115700 79%);
+        background-image: -moz-linear-gradient(left top, #147500 18%, #115700 79%);
+        background-image: -webkit-linear-gradient(left top, #147500 18%, #115700 79%);
+        background-image: -ms-linear-gradient(left top, #147500 18%, #115700 79%);
+        background-image: linear-gradient(to left top, #147500 18%, #115700 79%);
+    }
+
+.button2 {
+    padding: .2em 1em .2em 1em;
+    color: #ffffff;
+    border-radius: .2em;
+    text-decoration: none;
+    background-color: #707070;
+}
+
+    .button2:active {
+        background-color: #707070;
+    }
+
+.button3 {
+    text-decoration: none;
+    color: #0063ff;
+}
+
+.inputs {
+    padding-top: 2em;
+    text-align: right;
+}
+/* End Form Elements*/
 
 .wrapper {
     min-height: 100%;
@@ -46,9 +99,8 @@ form {
             width: 100%;
             height: auto;
             margin: 0 auto;
-            font-size: 2em;
-            font-family: "Hammersmith One", serif;
-            font-weight: bold;
+            font-size: 3em;
+            font-family: "PassionOne-Regular", serif;
             color: #191919;
         }
 
@@ -65,25 +117,11 @@ form {
             text-align: right;
         }
 
-            .actionLink {
-                width: auto;
-                height: 1em;
-                padding: .5em 1em .5em 1em;
-                text-decoration: none;
-                background-color: #808080;
-                color: #ffffff;
-                border-radius: .5em;
-            }
-
-            .actionLink_basic {
-                text-decoration: none;
-            }
-
     .nav {
         height: auto;
         margin: 0 auto;
-        background-color: #707070;
-        padding: 0 2% 0 2%;
+        background-color: #199c00;
+        padding: 0 4% 0 4%;
         font-size: 1.2em;
     }
 
@@ -119,22 +157,25 @@ form {
                         padding-right: 2em;
                         text-decoration: none;
                         color: #ffffff;
-                        background-color: #707070;
+                        background-color: #199c00;
                     }
 
                     .nav_content ul li a:hover {
-                        background-color: #888;
+                        background-color: #115700;
                     }
 
     .main {
         height: auto;
         min-height: 4em;
-        padding: 2%;
+        padding: 4%;
         margin: 2em auto;
         position: relative;
         font-size: 1.2em;
         background-color: #ffffff;
         border-top: 3px solid #199c00;
+        border-right: 1px solid #9b9b9b;
+        border-bottom: 1px solid #9b9b9b;
+        border-left: 1px solid #9b9b9b;
     }
 
         .main:before, .main:after {
@@ -180,6 +221,12 @@ form {
                 border: 2px solid #ff0000;
             }
 
+            .headerRow {
+                font-size: 1.1em;
+                font-weight: bold;
+                padding-top: 1.5em;
+            }
+
         .br {
             margin-top: 1em;
         }
@@ -188,8 +235,13 @@ form {
             text-align: center;
         }
 
+        .indent {
+            padding-left: 3em;
+        }
+
 .footer {
     text-align: center;
+    font-size: 1em;
 }
 
 .footer, .push {
@@ -222,7 +274,8 @@ form {
         {
             width: 100%;
             height: auto;
-            min-height: 5em;
+            min-height: 3em;
+            font-size: 1.3em;
             text-align: center;
             margin-top: 1em;
             margin-bottom: 1em;
@@ -252,6 +305,7 @@ form {
 
 #loginLC {
     height: 16em;
+    text-align: center;
 }
 
     #slideshow {
@@ -274,19 +328,45 @@ form {
 
 }
 
-/* MISC */
+/* Resources */
+.resourceHeading {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-top: .5em;
+}
+
+.resourceList {
+    list-style-type: none;
+    padding-left: 3em;
+}
+
+    .resourceList .listItem {
+        margin: .4em 0 .4em 0;
+        padding: .5em .5em .5em 1em;  
+        background-color: #e8e8e8;
+    }
+
+        .listItem a {
+            text-decoration: none;
+        }
+
+        .listItem .button2 {
+            float: right;
+            margin-top: -.2em;
+        }
+
+/* Misc */
 
 .leftCol, .rightCol {
     width: 49%;
     height: auto;
     display: inline-block;
     vertical-align: top;
-    /*border: 1px solid #f00;*/
     margin-bottom: 1em;
 }
 
 .leftCol {
-    text-align: center;
+    text-align: left;
 }
 
 .rightCol {

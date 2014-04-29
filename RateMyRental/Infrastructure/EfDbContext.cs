@@ -15,6 +15,7 @@ namespace RateMyRental.Infrastructure
         public DbSet<Domain> Domains { get; set; }
         public DbSet<PasswordResetRequest> PasswordResetRequests { get; set; }
         public DbSet<ResourceHeading> ResourceHeadings { get; set; }
+        public DbSet<Resource> Resources { get; set; }
 
         //Link to connection in web.config
         public EfDbContext()

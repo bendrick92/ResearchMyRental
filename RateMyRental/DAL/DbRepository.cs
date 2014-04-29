@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
+using System.Web.WebPages.Html;
 
 namespace RateMyRental.DAL
 {
@@ -219,7 +220,6 @@ namespace RateMyRental.DAL
             var v = from d in dbc.Domains select d;
             return v;
         }
-        #endregion
 
         /// <summary>
         /// Get all DomainNames from database
@@ -283,18 +283,208 @@ namespace RateMyRental.DAL
             var v = from p in dbc.PasswordResetRequests where p.Token == token select p;
             return v.FirstOrDefault();
         }
+        #endregion
 
         #region Resources
+        /// <summary>
+        /// Get ResourceHeading object by ID
+        /// </summary>
+        /// <param name="ID">ID of ResourceHeading</param>
+        public ResourceHeading GetResourceHeadingByID(int ID)
+        {
+            var v = from rh in dbc.ResourceHeadings where rh.ID == ID select rh;
+            return v.FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Add a new ResourceHeading to the database
+        /// </summary>
+        /// <param name="rh">ResourceHeading object to be added</param>
         public void AddResourceHeading(ResourceHeading rh)
         {
             dbc.Entry(rh).State = EntityState.Added;
             Save();
         }
 
+        /// <summary>
+        /// Delete ResourceHeading object
+        /// </summary>
+        /// <param name="ID">ID of ResourceHeading</param>
+        public void DeleteResourceHeading(int ID)
+        {
+            ResourceHeading rh = GetResourceHeadingByID(ID);
+            dbc.Entry(rh).State = EntityState.Deleted;
+            Save();
+        }
+
+        /// <summary>
+        /// Update ResourceHeading object
+        /// </summary>
+        /// <param name="rh">ResourceHeading object to be updated</param>
+        public void UpdateResourceHeading(ResourceHeading rh)
+        {
+            dbc.Entry(rh).State = EntityState.Modified;
+            Save();
+        }
+
+        /// <summary>
+        /// Gets all ResourceHeadings from database
+        /// </summary>
+        /// <returns>IEnumerable of ResourceHeadings</returns>
         public IEnumerable<ResourceHeading> GetAllResourceHeadings()
         {
             var v = from rh in dbc.ResourceHeadings select rh;
             return v;
+        }
+
+        /// <summary>
+        /// Get a SelectList of all ResourceHeadings
+        /// </summary>
+        /// <returns>SelectList of all ResourceHeadings; Text = headingText, Value = ID</returns>
+        public List<SelectListItem> GetResourceHeadingList()
+        {
+            var v = GetAllResourceHeadings();
+            List<SelectListItem> resourceHeadingsList = new List<SelectListItem>();
+            foreach (var rh in v)
+            {
+                SelectListItem newItem = new SelectListItem { Text = rh.headingText, Value = rh.ID.ToString() };
+                resourceHeadingsList.Add(newItem);
+            }
+            return resourceHeadingsList;
+        }
+
+        /// <summary>
+        /// Gets a string list of all current ResourceHeadings
+        /// </summary>
+        /// <returns>List<string> of all ResourceHeadings</string></returns>
+        public List<string> GetCurrentResourceHeadingsList()
+        {
+            var v = GetAllResourceHeadings();
+            List<string> currentResourceHeadingsList = new List<string>();
+            foreach (var rh in v)
+            {
+                string s = rh.headingText;
+                currentResourceHeadingsList.Add(s);
+            }
+            return currentResourceHeadingsList;
+        }
+
+        /// <summary>
+        /// Get Resource object from database by ID
+        /// </summary>
+        /// <param name="resourceID">ID of Resource</param>
+        /// <returns>Resource object</returns>
+        public Resource GetResourceByID(int resourceID)
+        {
+            var v = from r in dbc.Resources where r.ID == resourceID select r;
+            return v.FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Gets all Resource objects from the database
+        /// </summary>
+        /// <returns>IEnumerable of all Resources</returns>
+        public IEnumerable<Resource> GetAllResources()
+        {
+            var v = from r in dbc.Resources select r;
+            return v;
+        }
+
+        /// <summary>
+        /// Add new Resource object to database
+        /// </summary>
+        /// <param name="resource">Resource object to be added</param>
+        public void AddResource(Resource resource)
+        {
+            resource.FileName = resource.FileName.Replace("http://", "");
+            resource.FileName = resource.FileName.Replace("https://", "");
+            dbc.Entry(resource).State = EntityState.Added;
+            Save();
+        }
+
+        /// <summary>
+        /// Delete Resource object from database
+        /// </summary>
+        /// <param name="resourceID">ID of Resource</param>
+        public void DeleteResource(int resourceID)
+        {
+            Resource resource = GetResourceByID(resourceID);
+            dbc.Entry(resource).State = EntityState.Deleted;
+            Save();
+        }
+
+        /// <summary>
+        /// Updates Resource object in database
+        /// </summary>
+        /// <param name="resource">Updated Resource</param>
+        public void UpdateResource(Resource resource)
+        {
+            resource.UploadDate = DateTime.Now;
+            resource.FileName = resource.FileName.Replace("http://", "");
+            resource.FileName = resource.FileName.Replace("https://", "");
+            dbc.Entry(resource).State = EntityState.Modified;
+            Save();
+        }
+
+        /// <summary>
+        /// Gets a list of all allowed file extensions
+        /// </summary>
+        /// <returns>List of allowed extension strings</returns>
+        public List<string> GetAllowedExtensionsList()
+        {
+            List<string> allowedExtensions = new List<string>();
+            //Image types
+            allowedExtensions.Add(".jpg");
+            allowedExtensions.Add(".png");
+            allowedExtensions.Add(".gif");
+            //Document types
+            allowedExtensions.Add(".pdf");
+            allowedExtensions.Add(".doc");
+            allowedExtensions.Add(".docx");
+            allowedExtensions.Add(".xls");
+            allowedExtensions.Add(".xlsx");
+            allowedExtensions.Add(".odf");
+            return allowedExtensions;
+        }
+
+        /// <summary>
+        /// Checks whether or not a specified ResourceHeading exists or not
+        /// </summary>
+        /// <param name="resourceHeadingTitle">ResourceHeading title</param>
+        /// <returns>True = ResourceHeading exists, False = ResourceHeading does not exist</returns>
+        public bool CheckForResourceHeading(string resourceHeadingTitle)
+        {
+            var v = from rh in dbc.ResourceHeadings where rh.headingText.ToLower().Trim() == resourceHeadingTitle.ToLower().Trim() select rh;
+            if (v != null && v.Count() > 0)
+            {
+                //ResourceHeading already exists
+                return true;
+            }
+            else
+            {
+                //ResourceHeading does not exist
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Check the Resources table for references to a given ResourceHeading
+        /// </summary>
+        /// <param name="resourceHeadingID">ID of ResourceHeading</param>
+        /// <returns>True = There are some Resource dependencies, False = There are no Resource dependencies</returns>
+        public bool CheckForResourceDependencies(int resourceHeadingID)
+        {
+            var v = from r in dbc.Resources where r.ResourceType == resourceHeadingID select r;
+            //There are Resources that rely on this ResourceHeading
+            if (v != null && v.Count() > 0)
+            {
+                return true;
+            }
+            //There are no Resources that rely on this ResourceHeading
+            else
+            {
+                return false;
+            }
         }
         #endregion
 

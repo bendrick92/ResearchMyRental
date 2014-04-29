@@ -1,5 +1,5 @@
 ﻿@{
-    if (Request.IsAuthenticated)
+    if (Request.IsAuthenticated && Session["Username"] != null)
     {
         Layout = "~/Views/Shared/_Layout.cshtml";
     }
