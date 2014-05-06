@@ -283,6 +283,21 @@ namespace RateMyRental.DAL
             var v = from p in dbc.PasswordResetRequests where p.Token == token select p;
             return v.FirstOrDefault();
         }
+
+        /// <summary>
+        /// Gets a list of all Administrators e-mails
+        /// </summary>
+        /// <returns>List of e-mails</returns>
+        public List<string> GetAdminEmailsList()
+        {
+            List<string> emails = new List<string>();
+            var v = GetAllUsers().Where(m => m.isAdmin == true);
+            foreach (var user in v)
+            {
+                emails.Add(user.email);
+            }
+            return emails;
+        }
         #endregion
 
         #region Resources
@@ -377,6 +392,10 @@ namespace RateMyRental.DAL
         public Resource GetResourceByID(int resourceID)
         {
             var v = from r in dbc.Resources where r.ID == resourceID select r;
+            foreach (var resource in v)
+            {
+                resource.ResourceHeading = GetResourceHeadingByID(resource.ResourceType);
+            }
             return v.FirstOrDefault();
         }
 
@@ -485,6 +504,140 @@ namespace RateMyRental.DAL
             {
                 return false;
             }
+        }
+        #endregion
+
+        #region Reviews
+        /// <summary>
+        /// Gets all State objects
+        /// </summary>
+        /// <returns>IEnumerable of all States</returns>
+        public IEnumerable<State> GetAllStates()
+        {
+            var v = from s in dbc.States select s;
+            return v;
+        }
+
+        /// <summary>
+        /// Gets State object by ID
+        /// </summary>
+        /// <param name="ID">ID of State to get</param>
+        /// <returns>State object</returns>
+        public State GetStateByID(int ID)
+        {
+            var v = from s in dbc.States where s.ID == ID select s;
+            return v.FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Gets List of States
+        /// </summary>
+        /// <returns>List of States</returns>
+        public List<SelectListItem> GetStatesList()
+        {
+            var v = GetAllStates();
+            List<SelectListItem> statesList = new List<SelectListItem>();
+            foreach (var state in v)
+            {
+                SelectListItem newItem = new SelectListItem { Text = state.StateName, Value = state.ID.ToString() };
+                statesList.Add(newItem);
+            }
+            return statesList;
+        }
+
+        /// <summary>
+        /// Gets all City objects
+        /// </summary>
+        /// <returns>IEnumerable of all Cities</returns>
+        public IEnumerable<City> GetAllCities()
+        {
+            var v = from c in dbc.Cities select c;
+            return v;
+        }
+
+        /// <summary>
+        /// Gets City object by ID
+        /// </summary>
+        /// <param name="ID">ID of City to get</param>
+        /// <returns>City object</returns>
+        public City GetCityByID(int ID)
+        {
+            var v = from c in dbc.Cities where c.ID == ID select c;
+            return v.FirstOrDefault();
+        } 
+
+        /// <summary>
+        /// Gets a List of all City objects
+        /// </summary>
+        /// <returns>List of Cities</returns>
+        public List<SelectListItem> GetCitiesList()
+        {
+            var v = GetAllCities();
+            List<SelectListItem> citiesList = new List<SelectListItem>();
+            foreach (var city in v)
+            {
+                SelectListItem newItem = new SelectListItem { Text = city.CityName, Value = city.ID.ToString() };
+                citiesList.Add(newItem);
+            }
+            return citiesList;
+        }
+
+        /// <summary>
+        /// Gets all Properties
+        /// </summary>
+        /// <returns>IEnumerable of all Properties</returns>
+        public IEnumerable<Property> GetAllProperties()
+        {
+            var v = from p in dbc.Properties select p;
+            //Assign City and State objects
+            foreach (var property in v)
+            {
+                property.State = GetStateByID(property.StateID);
+                property.City = GetCityByID(property.CityID);
+            }
+            return v;
+        }
+
+        /// <summary>
+        /// Adds new Property object to database
+        /// </summary>
+        /// <param name="property">Property to add</param>
+        public void AddProperty(Property property)
+        {
+            dbc.Entry(property).State = EntityState.Added;
+            Save();
+        }
+
+        /// <summary>
+        /// Deletes Property object from database
+        /// </summary>
+        /// <param name="ID">ID of Property to delete</param>
+        public void DeleteProperty(int ID)
+        {
+            Property property = GetPropertyByID(ID);
+            dbc.Entry(property).State = EntityState.Deleted;
+            Save();
+        }
+
+        /// <summary>
+        /// Updates Property object
+        /// </summary>
+        /// <param name="property">Updated Property object</param>
+        public void UpdateProperty(Property property)
+        {
+            dbc.Entry(property).State = EntityState.Modified;
+            Save();
+        }
+
+        /// <summary>
+        /// Gets Property object by ID
+        /// </summary>
+        /// <param name="ID">ID of Property object</param>
+        /// <returns>Property object</returns>
+        public Property GetPropertyByID(int ID)
+        {
+            var v = GetAllProperties().Where(p => p.ID == ID);
+            return v.FirstOrDefault();
         }
         #endregion
 

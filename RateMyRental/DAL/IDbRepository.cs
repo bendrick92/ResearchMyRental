@@ -33,6 +33,7 @@ namespace RateMyRental.DAL
         void DeletePasswordResetRequestsForUser(int userID);
         PasswordResetRequest GetPasswordResetRequestByID(int prrID);
         PasswordResetRequest GetPasswordResetRequestByToken(string token);
+        List<string> GetAdminEmailsList();
         #endregion
 
         #region Resources
@@ -51,6 +52,20 @@ namespace RateMyRental.DAL
         List<string> GetAllowedExtensionsList();
         bool CheckForResourceHeading(string resourceHeadingTitle);
         bool CheckForResourceDependencies(int resourceHeadingID);
+        #endregion
+
+        #region Reviews
+        IEnumerable<State> GetAllStates();
+        State GetStateByID(int ID);
+        List<SelectListItem> GetStatesList();
+        IEnumerable<City> GetAllCities();
+        City GetCityByID(int ID);
+        List<SelectListItem> GetCitiesList();
+        IEnumerable<Property> GetAllProperties();
+        void AddProperty(Property property);
+        void DeleteProperty(int ID);
+        void UpdateProperty(Property property);
+        Property GetPropertyByID(int ID);
         #endregion
 
         #region Misc

@@ -5,8 +5,54 @@
 }
 
 <div class="fullCol">
-    <div class="row">
-        <i>Coming soon!</i>
+    <div class="searchRow">
+        Quick Search: @Html.EditorFor(m => m.quickSearchValue)
+        <br />
+        @Html.ActionLink("Advanced Search", "AdvancedSearch")
     </div>
+</div>
+<div class="leftCol">
+    <div class="headerRow">
+        Recently added reviews:
+    </div>
+    <div class="row br">
+        <div class="reviewBox">
+            <div class="left">
+                <img class="reviewImage" src="~/Content/PropertyImages/1.jpg" alt="" />
+            </div>
+            <div class="right">
+                <div class="row address">
+                    735 24th St. N
+                </div>
+                <div class="row rating">
+
+                </div>
+                <div class="row inputs">
+                    @Html.ActionLink("View Property", "ViewProperty", null, new { @class = "button2" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row br">
+        <div class="reviewBox">
+            <div class="left">
+                <img class="reviewImage" src="~/Content/PropertyImages/1.jpg" alt="" />
+            </div>
+            <div class="right">
+                <div class="row address">
+                    735 24th St. N
+                </div>
+                <div class="row rating">
+
+                </div>
+                <div class="row inputs">
+                    @Html.ActionLink("View Property", "ViewProperty", null, new { @class = "button2" })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="rightCol">
+
 </div>
 

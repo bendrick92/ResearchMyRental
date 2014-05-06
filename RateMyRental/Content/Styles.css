@@ -337,10 +337,15 @@ input {
 
 .resourceList {
     list-style-type: none;
-    padding-left: 3em;
+    width: 95%;
+    height: auto;
+    padding-left: 5%;
 }
 
     .resourceList .listItem {
+        width: 95%;
+        height: auto;
+        float: right;
         margin: .4em 0 .4em 0;
         padding: .5em .5em .5em 1em;  
         background-color: #e8e8e8;
@@ -351,9 +356,47 @@ input {
         }
 
         .listItem .button2 {
-            float: right;
             margin-top: -.2em;
         }
+
+/* Reviews */
+.searchRow {
+    width: 100%;
+    height: auto;
+    text-align: right;
+}
+
+.reviewBox {
+    width: 98%;
+    height: 9em;
+    padding: .5em 1% .5em 1%;
+    background-color: #199c00;
+}
+
+    .reviewBox .left, .right {
+        width: 49%;
+        height: 100%;
+        float: left;
+        overflow: hidden;
+    }
+
+        .reviewImage {
+            width: auto;
+            height: 100%;
+        }
+
+        .address {
+            font-size: 2em;
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        .rating {
+            padding-top: .5em;
+            padding-bottom: .5em;
+            height: 1em;
+        }
+
 
 /* Misc */
 

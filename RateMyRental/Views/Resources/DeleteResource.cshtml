@@ -4,11 +4,13 @@
     ViewBag.Title = "Delete Resource";
 }
 
-@using (Html.BeginForm("AddResource", "Resources", FormMethod.Post, new { encType = "multipart/form-data" }))
+@using (Html.BeginForm("DeleteResource", "Resources", FormMethod.Post))
 {
     @Html.HiddenFor(m => m.resource.ID)
     @Html.HiddenFor(m => m.resource.IsURL)
     @Html.HiddenFor(m => m.resource.UploadDate)
+    @Html.HiddenFor(m => m.resource.FileName)
+    @Html.HiddenFor(m => m.resource.ResourceType)
     <div class="fullCol">
         <div class="row">
             Are you sure you want to delete this resource?

@@ -118,6 +118,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\PropertyImages\1.jpg" />
     <Content Include="Content\green_cup.png" />
     <Content Include="Content\house1.jpg" />
     <Content Include="Content\house2.jpg" />
@@ -162,11 +163,14 @@
     <Compile Include="DAL\IDbRepository.cs" />
     <Compile Include="DbInitialize.cs" />
     <Compile Include="Email.cs" />
+    <Compile Include="Entities\City.cs" />
     <Compile Include="Entities\Domain.cs" />
     <Compile Include="Entities\PasswordResetRequest.cs" />
+    <Compile Include="Entities\Property.cs" />
     <Compile Include="Entities\Registration.cs" />
     <Compile Include="Entities\Resource.cs" />
     <Compile Include="Entities\ResourceHeading.cs" />
+    <Compile Include="Entities\State.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

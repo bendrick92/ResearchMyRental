@@ -242,6 +242,14 @@ namespace RateMyRental.Controllers
             {
                 //Delete Resource from database
                 repo.DeleteResource(model.resource.ID);
+                //Delete file if necessary
+                if (model.resource.IsURL == false)
+                {
+                    //Resource is not a URL - associated file to be deleted
+                    string fileName = model.resource.FileName;
+                    var path = Path.Combine(Server.MapPath("~/Content/Resources"), fileName);
+                    System.IO.File.Delete(path);
+                }
                 TempData["popupMessage"] = "Resource successfully deleted!";
                 return RedirectToAction("Index");
             }

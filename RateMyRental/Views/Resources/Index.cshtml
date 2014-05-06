@@ -38,9 +38,9 @@
                                 {
                                     if (bool.Parse(Session["isAdmin"].ToString()))
                                     {
-                                        <div style="display: inline-block; text-align: right;">
+                                        <span style="float: right;">
                                             @Html.ActionLink("Edit", "EditResource", new { ID = resource.ID }, new { @class = "button2" }) | @Html.ActionLink("Delete", "DeleteResource", new { ID = resource.ID }, new { @class = "button3" })
-                                        </div>
+                                        </span>
                                     }
                                 }
                             </li>
@@ -53,7 +53,9 @@
                                 {
                                     if (bool.Parse(Session["isAdmin"].ToString()))
                                     {
-                                        @Html.ActionLink("Edit", "EditResource", new { ID = resource.ID }, new { @class = "button2" }) @Html.ActionLink("Delete", "DeleteResource", new { ID = resource.ID }, new { @class = "button2" })
+                                        <span style="float: right">
+                                            @Html.ActionLink("Edit", "EditResource", new { ID = resource.ID }, new { @class = "button2" }) | @Html.ActionLink("Delete", "DeleteResource", new { ID = resource.ID }, new { @class = "button3" })
+                                        </span>
                                     }
                                 }
                             </li>
