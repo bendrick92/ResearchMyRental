@@ -59,6 +59,7 @@ namespace RateMyRental.Controllers
                                     var path = Path.Combine(Server.MapPath("~/Content/Resources"), fileName);
                                     file.SaveAs(path);
                                     model.resource.UploadDate = DateTime.Now;
+                                    model.resource.IsURL = false;
                                     repo.AddResource(model.resource);
 
                                     //Confirm to user that Resource was added
@@ -156,7 +157,7 @@ namespace RateMyRental.Controllers
                                     model.resource.FileName = fileName;
                                     path = Path.Combine(Server.MapPath("~/Content/Resources"), fileName);
                                     file.SaveAs(path);
-                                    model.isURL = false;
+                                    model.resource.IsURL = false;
                                     model.resource.UploadDate = DateTime.Now;
                                     repo.UpdateResource(model.resource);
                                     //Confirm to user that Resource was updated

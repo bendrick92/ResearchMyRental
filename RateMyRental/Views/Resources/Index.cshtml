@@ -24,47 +24,47 @@
                 }
             </div>
         </div>
-        <div class="row br">
-            <ul class="resourceList">
-                @foreach (var resource in @Model.resources)
+    <div class="row br" style="margin-bottom: 6em;">
+        <ul class="resourceList">
+            @foreach (var resource in @Model.resources)
+            {
+                if (resource.ResourceType == heading.ID)
                 {
-                    if (resource.ResourceType == heading.ID)
+                    if (resource.IsURL)
                     {
-                        if (resource.IsURL)
-                        {
-                            <li class="listItem">
-                                <a href="http://@resource.FileName" target="_blank">@resource.DisplayName</a>
-                                @if (Session["isAdmin"] != null)
+                        <li class="listItem">
+                            <a href="http://@resource.FileName" target="_blank">@resource.DisplayName</a>
+                            @if (Session["isAdmin"] != null)
+                            {
+                                if (bool.Parse(Session["isAdmin"].ToString()))
                                 {
-                                    if (bool.Parse(Session["isAdmin"].ToString()))
-                                    {
-                                        <span style="float: right;">
-                                            @Html.ActionLink("Edit", "EditResource", new { ID = resource.ID }, new { @class = "button2" }) | @Html.ActionLink("Delete", "DeleteResource", new { ID = resource.ID }, new { @class = "button3" })
-                                        </span>
-                                    }
+                                    <span style="float: right;">
+                                        @Html.ActionLink("Edit", "EditResource", new { ID = resource.ID }, new { @class = "button2" }) | @Html.ActionLink("Delete", "DeleteResource", new { ID = resource.ID }, new { @class = "button3" })
+                                    </span>
                                 }
-                            </li>
-                        }
-                        else
-                        {
-                            <li class="listItem">
-                                <a href="~/Content/Resources/@resource.FileName" target="_self">@resource.DisplayName</a>
-                                @if (Session["isAdmin"] != null)
+                            }
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="listItem">
+                            <a href="~/Content/Resources/@resource.FileName" target="_self">@resource.DisplayName</a>
+                            @if (Session["isAdmin"] != null)
+                            {
+                                if (bool.Parse(Session["isAdmin"].ToString()))
                                 {
-                                    if (bool.Parse(Session["isAdmin"].ToString()))
-                                    {
-                                        <span style="float: right">
-                                            @Html.ActionLink("Edit", "EditResource", new { ID = resource.ID }, new { @class = "button2" }) | @Html.ActionLink("Delete", "DeleteResource", new { ID = resource.ID }, new { @class = "button3" })
-                                        </span>
-                                    }
+                                    <span style="float: right">
+                                        @Html.ActionLink("Edit", "EditResource", new { ID = resource.ID }, new { @class = "button2" }) | @Html.ActionLink("Delete", "DeleteResource", new { ID = resource.ID }, new { @class = "button3" })
+                                    </span>
                                 }
-                            </li>
-                        }
+                            }
+                        </li>
                     }
                 }
-            </ul>
-        </div>
-        }
+            }
+        </ul>
+    </div>
+    }
     </div>
     @if (Session["isAdmin"] != null)
     {

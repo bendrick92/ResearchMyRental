@@ -428,12 +428,16 @@ input {
     }
     
     .main, .nav {
-        width: 28em;
+        width: 22em;
     }
 
         .nav_content {
             font-size: 1.1em;
         }
+
+            .nav_content li {
+                width: 100%;
+            }
 
     .leftCol {
         display: none;

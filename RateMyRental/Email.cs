@@ -41,7 +41,7 @@ public class Email
 
         System.Net.Mail.SmtpClient smtp = new System.Net.Mail.SmtpClient("smtp.gmail.com");
         smtp.Port = 587;
-        smtp.Credentials = new System.Net.NetworkCredential("walters.benj@gmail.com", "1n9a9n2a");
+        //smtp.Credentials = new System.Net.NetworkCredential("email@gmail.com", "password");
         smtp.EnableSsl = true;
         smtp.Send(message);
     }

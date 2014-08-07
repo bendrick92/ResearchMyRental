@@ -463,6 +463,7 @@ namespace RateMyRental.DAL
             allowedExtensions.Add(".xls");
             allowedExtensions.Add(".xlsx");
             allowedExtensions.Add(".odf");
+            allowedExtensions.Add(".txt");
             return allowedExtensions;
         }
 
